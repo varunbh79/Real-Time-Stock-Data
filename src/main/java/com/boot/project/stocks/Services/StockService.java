@@ -28,7 +28,9 @@ public class StockService {
     private WebClient webClient;
 
     private StockConfiguration stockConfiguration;
+
     private Map<String, String> companyTickerMap;
+
     @Value("${iex.api.key}")
     private String IEX_API_KEY;
     @Value("${yahoo.finance.url}")
