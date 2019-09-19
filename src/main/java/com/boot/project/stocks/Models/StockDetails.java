@@ -11,8 +11,11 @@ import java.math.BigInteger;
 public class StockDetails {
 
     private String companyName;
+    private String primaryExchange;
     private Double open;
     private Double close;
+    private BigDecimal high;
+    private BigDecimal low;
     private Double latestPrice;
     private BigInteger latestVolume;
     private Integer extendedPrice;
@@ -22,6 +25,31 @@ public class StockDetails {
     private BigDecimal week52Low;
     private BigDecimal iexBidPrice;
     private BigDecimal iexAskPrice;
+
+
+    public BigDecimal getHigh (){
+        return high;
+    }
+
+    public void setHigh (BigDecimal high){
+        this.high = high;
+    }
+
+    public BigDecimal getLow (){
+        return low;
+    }
+
+    public void setLow (BigDecimal low){
+        this.low = low;
+    }
+
+    public String getPrimaryExchange (){
+        return primaryExchange;
+    }
+
+    public void setPrimaryExchange (String primaryExchange){
+        this.primaryExchange = primaryExchange;
+    }
 
     public String getCompanyName () {
         return companyName;
@@ -119,22 +147,24 @@ public class StockDetails {
         this.iexAskPrice = iexAskPrice;
     }
 
+
     @Override
-    public String toString () {
-        return "StockDetails{" +
-                "companyName='" + companyName + '\'' +
-                ", open=" + open +
-                ", close=" + close +
-                ", latestPrice=" + latestPrice +
-                ", latestVolume=" + latestVolume +
-                ", extendedPrice=" + extendedPrice +
-                ", extendedChange=" + extendedChange +
-                ", previousClose=" + previousClose +
-                ", week52High=" + week52High +
-                ", week52Low=" + week52Low +
-                ", iexBidPrice=" + iexBidPrice +
-                ", iexAskPrice=" + iexAskPrice +
-                '}';
+    public String toString (){
+        return "companyName='"+companyName+'\''+
+                ", primaryExchange='"+primaryExchange+'\''+
+                ", open="+open+
+                ", close="+close+
+                ", high="+high+
+                ", low="+low+
+                ", latestPrice="+latestPrice+
+                ", latestVolume="+latestVolume+
+                ", extendedPrice="+extendedPrice+
+                ", extendedChange="+extendedChange+
+                ", previousClose="+previousClose+
+                ", week52High="+week52High+
+                ", week52Low="+week52Low+
+                ", iexBidPrice="+iexBidPrice+
+                ", iexAskPrice="+iexAskPrice;
     }
 }
 
