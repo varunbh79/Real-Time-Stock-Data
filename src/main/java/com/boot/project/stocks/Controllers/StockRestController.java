@@ -14,38 +14,35 @@ public class StockRestController {
 
     private StockService stockService;
     private StockConfiguration stockConfiguration;
-    private volatile Integer stockCount = new Integer ( 0 );
 
     public StockRestController (StockService stockService, StockConfiguration stockConfiguration) {
         this.stockService = stockService;
         this.stockConfiguration = stockConfiguration;
     }
 
+    @GetMapping("/hello")
+    public String sayHello (){
+        return "Welcome to Spring Boot";
+    }
+
+
     @GetMapping("/getObservableStockQuotes")
-    public Observable<StockDetails> getObservable () {
-        Map<String, String> companyNames = stockConfiguration.getCompanyMap ();
+    public Observable<Object> getObservable (){
+        Map<String, String> companyNames = stockConfiguration.getCompanyNames();
+        if(companyNames == null && companyNames.isEmpty())
+            return Observable.just( "Company names cannot be empty" );
 
-        return Observable.create ( emitter -> {
+        return Observable.create( emitter -> {
             while (!emitter.isDisposed ()) {
-                if (stockCount.intValue () == 23) {
-                    emitter.onComplete ();
-                    break;
-                }
-                for (String stockSymbol : companyNames.keySet ()) {
-
-                    String name = stockSymbol != null ? stockService.generateTickerFromJSON ( companyNames.get ( stockSymbol ) ) : null;
-                    StockDetails stockDetails = name != null ? stockService.fetchStockInfo ( name ) : null;
+                for (String companyName : companyNames.keySet()) {
+                    StockDetails stockDetails = stockService.fetchStockInfo( companyName );
                     if (stockDetails != null) {
-                        incrementStockCount ();
                         emitter.onNext ( stockDetails );
-                    }
+                    } else
+                        emitter.onNext( "Stock Details not found for "+companyName );
                 }
-                // ThreadUtilty.sleep(10);
             }
         } );
     }
 
-    private void incrementStockCount () {
-        stockCount = stockCount + 1;
-    }
 }
